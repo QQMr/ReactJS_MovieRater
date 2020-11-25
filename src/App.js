@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './App.css';
+import MovieList from './components/movie-list';
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
         'Authorization': 'Token 00899e358115a9ecd55a2fec3a88b74c28ed6076'
       }
     }).then( resp => resp.json() )
-    .then(resp => setMovie(resp))
+    .then(resp => {setMovie(resp) ; return resp})
+    .then(resp => console.log(resp))
     .catch(error => console.log(error))
   }, [])
 
@@ -23,11 +25,7 @@ function App() {
         <h1>Movie rater</h1>
       </header>
       <div className="layout">
-          <div>
-            { movies.map(movie=>{
-              return <h2> {movie.title} </h2>
-            })}
-          </div>
+          <MovieList movies={movies}></MovieList>
           <div>Movie details</div>
       </div>
     </div>

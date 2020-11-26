@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 function MovieDetails(props){
 
-    const mov = props.movie
+    const [ highlighted, setHighlighted ] = useState(-1);
+
+    const highlightRate = high => evt => {
+        setHighlighted(high);
+    }
+
+    const mov = props.movie;
     return (
         <div>
             {mov?(
@@ -17,6 +23,17 @@ function MovieDetails(props){
                 <FontAwesomeIcon icon={faStar} className={ mov.avg_rating>3 ? 'orange':'' }></FontAwesomeIcon>
                 <FontAwesomeIcon icon={faStar} className={ mov.avg_rating>4 ? 'orange':'' }></FontAwesomeIcon>
                 ({mov.no_of_ratings})
+                <div className='rate-container'>
+                    <h2>Rate it</h2>
+                    {
+                        [...Array(5)].map( (e,i)=>{
+                           return  <FontAwesomeIcon key={i} icon={faStar} className={ highlighted > i-1 ? 'purple':'' }
+                           onMouseEnter = { highlightRate(i) } 
+                           onMouseLeave = { highlightRate(i-1) } 
+                           /> 
+                        } )
+                    }
+                </div>
             </div>
             ): null}
         </div>

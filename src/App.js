@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import MovieList from './components/movie-list';
 import MovieDetails from './components/movie-details';
+import MovieForm from "./components/movie-form";
 
 function App() {
 
   const [movies, setMovie] =useState(['Movie 1 ','Movie 2']);
   const [selectedMovie, setSelectedMovie] =useState(null);
+  const [editedMovie, setEditedMovie] =useState(null);
 
   useEffect(()=>{
     fetch("http://127.0.0.1:8000/api/movies/",{
@@ -30,14 +32,19 @@ function App() {
     setSelectedMovie(movie);
   }
 
+  const editClicked = movie =>{
+    setEditedMovie(movie)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Movie rater</h1>
       </header>
       <div className="layout">
-          <MovieList movies={movies} movieClicked={movieClicked}></MovieList>
+          <MovieList movies={movies} movieClicked={movieClicked} editClicked={editClicked}></MovieList>
           <MovieDetails movie={selectedMovie} updateMovie={loadMovie} ></MovieDetails>
+          <MovieForm movie={editedMovie}/>
       </div>
     </div>
   );

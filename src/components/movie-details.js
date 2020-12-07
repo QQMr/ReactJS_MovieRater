@@ -6,11 +6,29 @@ function MovieDetails(props){
 
     const [ highlighted, setHighlighted ] = useState(-1);
 
+    const mov = props.movie;
+
     const highlightRate = high => evt => {
         setHighlighted(high);
     }
 
-    const mov = props.movie;
+    const rateClicked = rate => evt => {
+       
+        fetch(`http://127.0.0.1:8000/api/movies/${mov.id}/rate_movie/`,{
+            method:'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token 00899e358115a9ecd55a2fec3a88b74c28ed6076'
+            },
+            body: JSON.stringify({stars: rate+1})
+        })
+        .then( resp => resp.json() )
+        .then(resp => console.log(resp))
+        .catch(error => console.log(error))
+        
+    }
+
+    
     return (
         <div>
             {mov?(
@@ -29,7 +47,8 @@ function MovieDetails(props){
                         [...Array(5)].map( (e,i)=>{
                            return  <FontAwesomeIcon key={i} icon={faStar} className={ highlighted > i-1 ? 'purple':'' }
                            onMouseEnter = { highlightRate(i) } 
-                           onMouseLeave = { highlightRate(i-1) } 
+                           onMouseLeave = { highlightRate(-1) } 
+                           onClick = { rateClicked(i) }
                            /> 
                         } )
                     }

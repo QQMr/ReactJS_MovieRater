@@ -17,13 +17,17 @@ function App() {
       }
     }).then( resp => resp.json() )
     .then(resp => {setMovie(resp) ; return resp})
-    .then(resp => console.log(resp))
+    .then(resp => { console.log('App useEffect'); console.log(resp) } )
     .catch(error => console.log(error))
   }, [])
 
   const movieClicked = movie =>{
     console.log(movie.title);
     setSelectedMovie(movie)
+  }
+
+  const loadMovie = movie =>{
+    setSelectedMovie(movie);
   }
 
   return (
@@ -33,7 +37,7 @@ function App() {
       </header>
       <div className="layout">
           <MovieList movies={movies} movieClicked={movieClicked}></MovieList>
-          <MovieDetails movie={selectedMovie}></MovieDetails>
+          <MovieDetails movie={selectedMovie} updateMovie={loadMovie} ></MovieDetails>
       </div>
     </div>
   );

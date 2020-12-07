@@ -23,9 +23,25 @@ function MovieDetails(props){
             body: JSON.stringify({stars: rate+1})
         })
         .then( resp => resp.json() )
-        .then(resp => console.log(resp))
+        .then(resp => {console.log('POST SERVEER: ');console.log(resp); return resp;  })
+        .then( ()=> getDetails() )
         .catch(error => console.log(error))
         
+    }
+
+    const getDetails = () =>{
+        fetch(`http://127.0.0.1:8000/api/movies/${mov.id}/`,{
+            method:'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token 00899e358115a9ecd55a2fec3a88b74c28ed6076'
+            }
+        })
+        .then( resp => resp.json() )
+        .then(resp => {console.log('GET SERVEER '); console.log(resp); return resp;  })
+        .then( resp => { props.updateMovie(resp) } )
+        .catch(error => console.log(error))
+
     }
 
     

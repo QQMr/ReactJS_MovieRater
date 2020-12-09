@@ -41,7 +41,7 @@ function App() {
       <div className="layout">
           <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked}></MovieList>
           <MovieDetails movie={selectedMovie} updateMovie={loadMovie} ></MovieDetails>
-          <MovieForm movie={editedMovie}/>
+          { editedMovie ? <MovieForm movie={editedMovie}/> : null}
       </div>
     </div>
   );

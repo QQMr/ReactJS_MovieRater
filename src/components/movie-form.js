@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {API} from "../api-service"
 
 function MovieForm(props) {
 
@@ -7,6 +8,10 @@ function MovieForm(props) {
 
     const updateClicked = () =>{
         console.log('update here');
+        API.updateMovie(props.movie.id,{title,description})
+        .then( resp => console.log(resp) )
+        .catch(error => console.log(error));
+        
     }
 
     return(
@@ -14,11 +19,11 @@ function MovieForm(props) {
         { 
             props.movie ? (
             <div>
-                <label for="title" >Title</label><br/>
+                <label htmlFor="title" >Title</label><br/>
                 <input id="title" type="text" placeholder="title" value={title}
                         onChange = { evt => setTitle(evt.target.value) }
                 /><br/>
-                <label for="description" type="text">Description</label><br/>
+                <label htmlFor="description" type="text">Description</label><br/>
                 <textarea id="description" type="text" placeholder="description"
                             value ={description}
                             onChange = { evt => setDescription(evt.target.value) }

@@ -6,7 +6,7 @@ import MovieForm from "./components/movie-form";
 
 function App() {
 
-  const [movies, setMovie] =useState(['Movie 1 ','Movie 2']);
+  const [movies, setMovies] =useState(['Movie 1 ','Movie 2']);
   const [selectedMovie, setSelectedMovie] =useState(null);
   const [editedMovie, setEditedMovie] =useState(null);
 
@@ -18,7 +18,7 @@ function App() {
         'Authorization': 'Token 00899e358115a9ecd55a2fec3a88b74c28ed6076'
       }
     }).then( resp => resp.json() )
-    .then(resp => {setMovie(resp) ; return resp})
+    .then(resp => {setMovies(resp) ; return resp})
     .then(resp => { console.log('App useEffect'); console.log(resp) } )
     .catch(error => console.log(error))
   }, [])
@@ -33,6 +33,16 @@ function App() {
     setSelectedMovie(null)
   }
 
+  const updateMovie = movie =>{
+    const newMovies = movies.map( mov =>{
+      if( mov.id === movie.id )
+        return movie
+      else
+        return mov
+    } )
+
+    setMovies(newMovies);
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -41,7 +51,7 @@ function App() {
       <div className="layout">
           <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked}></MovieList>
           <MovieDetails movie={selectedMovie} updateMovie={loadMovie} ></MovieDetails>
-          { editedMovie ? <MovieForm movie={editedMovie}/> : null}
+          { editedMovie ? <MovieForm movie={editedMovie} updateMovie={updateMovie}/> : null}
       </div>
     </div>
   );

@@ -1,22 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import {API} from "../api-service"
-import { TokenContext } from '../index'
+import { useCookies } from 'react-cookie'
 
 function Auth(){
 
     const [ username,setUsername] = useState('');
     const [ password,setPssword] = useState('');
 
-    const {token, setToken} = useContext(TokenContext);
+    const [token, setToken] = useCookies(['mr-token']);
 
     useEffect(()=>{
         console.log(token);
-        if(token) window.location.href=  "/movies";
+        console.log(typeof(token['mr-token']));
+        if(token['mr-token'] && token['mr-token']!=='undefined' ) window.location.href=  "/movies";
+
     },[token])
 
     const loginClicked = () => {
         API.LoginUser( {username,password} )
-            .then(resp => {console.log(resp); setToken(resp.token); } )
+            .then(resp => {console.log(resp); setToken('mr-token',resp.token); } )
             .catch( error => console.log(error))
     }
     return(

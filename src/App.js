@@ -4,7 +4,7 @@ import MovieList from './components/movie-list';
 import MovieDetails from './components/movie-details';
 import MovieForm from "./components/movie-form";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFilm} from '@fortawesome/free-solid-svg-icons'
+import {faFilm, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import { useCookies } from 'react-cookie'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   const [selectedMovie, setSelectedMovie] =useState(null);
   const [editedMovie, setEditedMovie] =useState(null);
 
-  const [token] = useCookies(['mr-token']);
+  const [token, setToken,deleteToken] = useCookies(['mr-token']);
 
 
   useEffect(()=>{
@@ -71,6 +71,10 @@ function App() {
     setMovies(newMovies);
   }
 
+  const logoutUser = () =>{
+    deleteToken(['mr-token']);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -78,6 +82,7 @@ function App() {
           <FontAwesomeIcon icon={faFilm}/> 
           <span>Movie rater</span>
         </h1>
+        <FontAwesomeIcon icon={faSignOutAlt} onClick={logoutUser}/>
       </header>
       <div className="layout">
         <div>

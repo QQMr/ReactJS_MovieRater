@@ -33,6 +33,8 @@ function MovieForm(props) {
         
     }
 
+    const isDisabled = title.length === 0 || description.length === 0
+
     return(
         <React.Fragment>
         { 
@@ -49,9 +51,9 @@ function MovieForm(props) {
                 ></textarea><br/>
                 { 
                 props.movie.id?(
-                <button onClick = {updateClicked } >Update</button>
+                <button onClick = {updateClicked } disabled={isDisabled}>Update</button>
                 ):
-                <button onClick = {cteateClicked } >Create</button>
+                <button onClick = {cteateClicked } disabled={isDisabled}>Create</button>
                     
                 }
             </div>

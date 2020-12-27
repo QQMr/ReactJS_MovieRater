@@ -1,9 +1,15 @@
 //const TOKEN = "00899e358115a9ecd55a2fec3a88b74c28ed6076"
 
+//const urlpath =  'http://127.0.0.1:8000/auth/' ;
+//const urlpath = 'http://192.168.0.101:8000/';
+const urlpath = 'https://movie-rater-tutorial-burton.herokuapp.com/';
+
+export {urlpath};
+
 export class API{
 
     static LoginUser(body) {
-      return fetch(`http://127.0.0.1:8000/auth/`,{
+      return fetch(urlpath+`auth/`,{
         method:'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -13,7 +19,7 @@ export class API{
     }
 
     static registerUser(body) {
-      return fetch(`http://127.0.0.1:8000/api/users/`,{
+      return fetch(urlpath+`api/users/`,{
         method:'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,7 +29,7 @@ export class API{
     }
     
     static getMovies(TOKEN) {
-      return fetch("http://127.0.0.1:8000/api/movies/",{
+      return fetch(urlpath+"api/movies/",{
         method:'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +39,7 @@ export class API{
     }
 
     static updateMovie(mov_id,body,TOKEN) {
-        return fetch(`http://127.0.0.1:8000/api/movies/${mov_id}/`,{
+        return fetch(urlpath+`api/movies/${mov_id}/`,{
             method:'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -44,7 +50,7 @@ export class API{
     }
 
     static createMovie(body,TOKEN) {
-        return fetch(`http://127.0.0.1:8000/api/movies/`,{
+        return fetch(urlpath+`api/movies/`,{
             method:'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -55,7 +61,7 @@ export class API{
     }
 
     static deleteMovie(mov_id,TOKEN) {
-        return fetch(`http://127.0.0.1:8000/api/movies/${mov_id}/`,{
+        return fetch(urlpath+`/api/movies/${mov_id}/`,{
             method:'DELETE',
             headers: {
               'Content-Type': 'application/json',
